@@ -10,7 +10,7 @@ export default function Home() {
   useSEO({
     title: 'Vault 26 — Quiet luxury essentials, made in India',
     description: 'A curated wardrobe of premium minimalist clothing — outerwear, shirts, trousers and knitwear. Free shipping over ₹999.',
-    image: 'https://lovable.dev/opengraph-image-p98pqg.png',
+    image: '/vault-26-og-image.png',
     jsonLd: { '@context': 'https://schema.org', '@type': 'Store', name: 'Vault 26', url: typeof window !== 'undefined' ? window.location.origin : '' },
   });
   const [products, setProducts] = useState<ProductCardData[]>([]);
