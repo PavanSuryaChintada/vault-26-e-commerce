@@ -213,7 +213,24 @@ export function OrderDetail() {
               <div className="text-[9px] text-black/30 tracking-[0.2em] uppercase font-ui mt-6 border-t border-black/5 pt-6">
                 Method: {o.payment_method} // {o.payment_status}
               </div>
+              {o.refund_status && o.refund_status !== 'NONE' && (
+                <div className="mt-6 border border-accent/30 bg-accent/5 p-4 text-[10px] font-ui tracking-[0.2em] uppercase">
+                  <div className="font-bold mb-1">Refund: {o.refund_status}</div>
+                  {Number(o.refund_amount) > 0 && <div>Amount: {inr(Number(o.refund_amount))}</div>}
+                  {o.refund_notes && <div className="mt-2 normal-case tracking-normal text-black/60">{o.refund_notes}</div>}
+                </div>
+              )}
             </div>
+
+            {canCancel && (
+              <button
+                onClick={cancel}
+                disabled={cancelling}
+                className="w-full border border-black px-6 py-4 text-[10px] tracking-[0.4em] uppercase font-ui font-bold hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-3 disabled:opacity-50"
+              >
+                <XCircle className="h-4 w-4" /> {cancelling ? 'Cancelling…' : 'Cancel Order'}
+              </button>
+            )}
           </aside>
         </div>
       </motion.div>
