@@ -96,21 +96,33 @@ export function OrderDetail() {
   const { id } = useParams();
   const [o, setO] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [cancelling, setCancelling] = useState(false);
 
-  useEffect(() => {
+  const load = async () => {
     if (!id) return;
-    (async () => {
-      setLoading(true);
-      const { data } = await supabase.from('orders').select('*, order_items(*)').eq('id', id).maybeSingle();
-      setO(data);
-      setLoading(false);
-    })();
-  }, [id]);
+    setLoading(true);
+    const { data } = await supabase.from('orders').select('*, order_items(*)').eq('id', id).maybeSingle();
+    setO(data);
+    setLoading(false);
+  };
+
+  useEffect(() => { load(); }, [id]);
+
+  const cancel = async () => {
+    if (!o || !confirm('Cancel this order? This cannot be undone.')) return;
+    setCancelling(true);
+    const { error } = await supabase.from('orders').update({ status: 'CANCELLED' as any }).eq('id', o.id);
+    setCancelling(false);
+    if (error) return toast.error(error.message);
+    toast.success('Order cancelled. Refunds (if any) will be processed shortly.');
+    load();
+  };
 
   if (loading) return <div className="container-px py-48 text-center uppercase tracking-[0.5em] text-[10px] animate-pulse">Decrypting Order Data...</div>;
   if (!o) return <div className="container-px py-48 text-center uppercase tracking-[0.5em] text-[10px]">Log Not Found</div>;
 
   const stage = STATUS_LABELS.indexOf(o.status);
+  const canCancel = o.status === 'PENDING';
 
   return (
     <div className="container-px py-24 min-h-screen bg-white">
