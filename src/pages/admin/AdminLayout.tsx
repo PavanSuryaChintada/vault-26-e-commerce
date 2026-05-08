@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '@/lib/useAuth';
-import { LayoutDashboard, ShoppingBag, Package, Tag, Users, Settings as SettingsIcon, Ticket, FileText, Menu, X } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, Package, Tag, Users, Settings as SettingsIcon, Ticket, FileText, Menu, X, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import AdminNotifications from '@/components/admin/AdminNotifications';
 
 const NAV = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
   { to: '/admin/orders', icon: ShoppingBag, label: 'Orders' },
+  { to: '/admin/refunds', icon: RotateCcw, label: 'Refunds' },
   { to: '/admin/products', icon: Package, label: 'Products' },
   { to: '/admin/coupons', icon: Ticket, label: 'Coupons' },
   { to: '/admin/customers', icon: Users, label: 'Customers' },
@@ -35,9 +37,12 @@ export default function AdminLayout() {
       {/* Mobile Header */}
       <header className="md:hidden bg-sidebar text-sidebar-foreground p-4 flex items-center justify-between border-b border-sidebar-accent/20">
         <img src={LOGO_URL} alt="Vault 26" className="h-8 w-auto brightness-0 invert" />
-        <button onClick={() => setMobileOpen(true)} className="p-2 hover:bg-sidebar-accent/50 rounded transition-colors">
-          <Menu className="h-6 w-6" />
-        </button>
+        <div className="flex items-center gap-1">
+          <AdminNotifications />
+          <button onClick={() => setMobileOpen(true)} className="p-2 hover:bg-sidebar-accent/50 rounded transition-colors">
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
       </header>
 
       {/* Mobile Sidebar Overlay */}
@@ -97,8 +102,13 @@ export default function AdminLayout() {
         </nav>
       </aside>
 
-      <main className="flex-1 bg-background p-4 md:p-10 min-w-0 overflow-x-hidden">
-        <Outlet />
+      <main className="flex-1 bg-background min-w-0 overflow-x-hidden">
+        <div className="hidden md:flex justify-end items-center gap-2 px-10 pt-6">
+          <AdminNotifications />
+        </div>
+        <div className="p-4 md:px-10 md:pb-10 md:pt-4">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
