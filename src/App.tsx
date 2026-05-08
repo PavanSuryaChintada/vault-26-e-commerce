@@ -19,6 +19,7 @@ import { Login, Register } from "@/pages/Auth";
 import AdminLayout from "@/pages/admin/AdminLayout";
 import Dashboard from "@/pages/admin/Dashboard";
 import AdminOrders from "@/pages/admin/AdminOrders";
+import AdminRefunds from "@/pages/admin/AdminRefunds";
 import AdminProducts from "@/pages/admin/AdminProducts";
 import { AdminCoupons, AdminCustomers, AdminSettings } from "@/pages/admin/AdminMisc";
 import AdminInvoiceTemplate from "@/pages/admin/AdminInvoiceTemplate";
