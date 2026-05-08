@@ -102,8 +102,13 @@ export default function AdminLayout() {
         </nav>
       </aside>
 
-      <main className="flex-1 bg-background p-4 md:p-10 min-w-0 overflow-x-hidden">
-        <Outlet />
+      <main className="flex-1 bg-background min-w-0 overflow-x-hidden">
+        <div className="hidden md:flex justify-end items-center gap-2 px-10 pt-6">
+          <AdminNotifications />
+        </div>
+        <div className="p-4 md:px-10 md:pb-10 md:pt-4">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
