@@ -5,7 +5,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { inr } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { Package, ArrowRight, Truck, CheckCircle2, Clock } from 'lucide-react';
+import { Package, ArrowRight, Truck, CheckCircle2, Clock, XCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 const STATUS_LABELS = ['PENDING', 'PACKED', 'SHIPPED', 'DELIVERED'];
 
