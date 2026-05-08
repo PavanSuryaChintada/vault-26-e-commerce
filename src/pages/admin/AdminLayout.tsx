@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '@/lib/useAuth';
-import { LayoutDashboard, ShoppingBag, Package, Tag, Users, Settings as SettingsIcon, Ticket, FileText, Menu, X } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, Package, Tag, Users, Settings as SettingsIcon, Ticket, FileText, Menu, X, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import AdminNotifications from '@/components/admin/AdminNotifications';
 
 const NAV = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
   { to: '/admin/orders', icon: ShoppingBag, label: 'Orders' },
+  { to: '/admin/refunds', icon: RotateCcw, label: 'Refunds' },
   { to: '/admin/products', icon: Package, label: 'Products' },
   { to: '/admin/coupons', icon: Ticket, label: 'Coupons' },
   { to: '/admin/customers', icon: Users, label: 'Customers' },
