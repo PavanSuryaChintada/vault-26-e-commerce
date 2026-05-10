@@ -60,19 +60,21 @@ export default function BentoGrid() {
             transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
             className={`group relative overflow-hidden bg-muted ${item.className}`}
           >
-            <img 
-              src={item.image} 
-              alt={item.title}
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="absolute inset-0 p-8 flex flex-col justify-end text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-              <span className="text-[9px] tracking-[0.4em] uppercase font-ui mb-2">{item.category}</span>
-              <h3 className="text-2xl font-elegant tracking-tight mb-4">{item.title}</h3>
-              <button className="text-[10px] tracking-[0.3em] uppercase font-ui font-bold border-b border-white/40 pb-1 self-start hover:border-white transition-colors">
-                Explore Piece
-              </button>
-            </div>
+            <Link to={item.to} className="block w-full h-full">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-end text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                <span className="text-[9px] tracking-[0.4em] uppercase font-ui mb-2">{item.category}</span>
+                <h3 className="text-2xl font-elegant tracking-tight mb-4">{item.title}</h3>
+                <span className="text-[10px] tracking-[0.3em] uppercase font-ui font-bold border-b border-white/40 pb-1 self-start hover:border-white transition-colors inline-flex items-center gap-2">
+                  Explore Piece <ArrowRight className="w-3 h-3" />
+                </span>
+              </div>
+            </Link>
           </motion.div>
         ))}
       </div>
