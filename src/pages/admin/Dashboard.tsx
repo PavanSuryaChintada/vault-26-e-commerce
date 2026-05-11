@@ -1,21 +1,27 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { inr } from '@/lib/format';
-import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip, BarChart, Bar } from 'recharts';
+import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip, BarChart, Bar, PieChart, Pie, Cell, Legend } from 'recharts';
+
+const STATUS_COLORS: Record<string, string> = { PENDING: '#f59e0b', PACKED: '#3b82f6', SHIPPED: '#8b5cf6', DELIVERED: '#10b981', CANCELLED: '#ef4444' };
 
 export default function Dashboard() {
-  const [stats, setStats] = useState({ revenue: 0, orders: 0, pending: 0, lowStock: 0 });
+  const [stats, setStats] = useState({ revenue: 0, orders: 0, pending: 0, lowStock: 0, customers: 0, aov: 0 });
   const [recent, setRecent] = useState<any[]>([]);
   const [trend, setTrend] = useState<any[]>([]);
+  const [statusData, setStatusData] = useState<{ name: string; value: number }[]>([]);
+  const [topCategories, setTopCategories] = useState<{ name: string; value: number }[]>([]);
 
   useEffect(() => {
     (async () => {
       const since = new Date(); since.setDate(since.getDate() - 30);
       const { data: orders } = await supabase.from('orders').select('*').gte('created_at', since.toISOString()).order('created_at', { ascending: false });
       const all = orders || [];
-      const revenue = all.filter((o) => o.payment_status === 'PAID' || o.payment_method === 'COD').reduce((s, o) => s + Number(o.total), 0);
+      const paid = all.filter((o) => o.payment_status === 'PAID' || o.payment_method === 'COD');
+      const revenue = paid.reduce((s, o) => s + Number(o.total), 0);
       const pending = all.filter((o) => o.status === 'PENDING').length;
-      setStats((s) => ({ ...s, revenue, orders: all.length, pending }));
+      const aov = paid.length ? revenue / paid.length : 0;
+      setStats((s) => ({ ...s, revenue, orders: all.length, pending, aov }));
       setRecent(all.slice(0, 8));
 
       // trend
@@ -24,8 +30,20 @@ export default function Dashboard() {
       all.forEach((o) => { const k = new Date(o.created_at).toISOString().slice(5, 10); if (k in buckets) buckets[k] += 1; });
       setTrend(Object.entries(buckets).map(([d, v]) => ({ d, orders: v })));
 
+      // status pie
+      const statusMap: Record<string, number> = {};
+      all.forEach((o) => { statusMap[o.status] = (statusMap[o.status] || 0) + 1; });
+      setStatusData(Object.entries(statusMap).map(([name, value]) => ({ name, value })));
+
       const { data: vars } = await supabase.from('product_variants').select('id').lt('stock', 5);
       setStats((s) => ({ ...s, lowStock: vars?.length || 0 }));
+
+      const { count: pcount } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
+      setStats((s) => ({ ...s, customers: pcount || 0 }));
+
+      // top categories by product count
+      const { data: cats } = await supabase.from('categories').select('name, products(id)');
+      setTopCategories((cats || []).map((c: any) => ({ name: c.name, value: c.products?.length || 0 })).sort((a, b) => b.value - a.value).slice(0, 6));
     })();
   }, []);
 
