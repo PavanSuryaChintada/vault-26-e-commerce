@@ -229,6 +229,12 @@ export function Register() {
             {loading ? 'Processing Application...' : 'Register Account'}
           </button>
         </form>
+        <div className="flex items-center gap-4 my-8">
+          <div className="flex-1 h-px bg-black/10" />
+          <span className="text-[9px] tracking-[0.4em] uppercase text-black/30 font-ui">Or</span>
+          <div className="flex-1 h-px bg-black/10" />
+        </div>
+        <GoogleButton label="Sign up with Google" />
 
         <div className="mt-12 text-center">
           <p className="text-[10px] tracking-[0.2em] text-black/40 uppercase font-ui">
