@@ -38,7 +38,10 @@ export default function AdminLayout() {
     <div className="min-h-screen flex flex-col md:flex-row bg-secondary">
       {/* Mobile Header */}
       <header className="md:hidden bg-sidebar text-sidebar-foreground p-4 flex items-center justify-between border-b border-sidebar-accent/20">
-        <img src={LOGO_URL} alt="Vault 26" className="h-8 w-auto brightness-0 invert" />
+        <div className="flex items-center gap-2">
+          <Link to="/" title="Back to website" className="p-2 hover:bg-sidebar-accent/50 rounded transition-colors"><ArrowLeft className="h-5 w-5" /></Link>
+          <img src={LOGO_URL} alt="Vault 26" className="h-8 w-auto brightness-0 invert" />
+        </div>
         <div className="flex items-center gap-1">
           <AdminNotifications />
           <button onClick={() => setMobileOpen(true)} className="p-2 hover:bg-sidebar-accent/50 rounded transition-colors">
