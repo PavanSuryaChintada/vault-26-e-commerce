@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '@/lib/useAuth';
-import { LayoutDashboard, ShoppingBag, Package, Tag, Users, Settings as SettingsIcon, Ticket, FileText, Menu, X, RotateCcw, Layers } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, Package, Tag, Users, Settings as SettingsIcon, Ticket, FileText, Menu, X, RotateCcw, Layers, ExternalLink, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import AdminNotifications from '@/components/admin/AdminNotifications';
