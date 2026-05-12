@@ -82,7 +82,8 @@ export function AdminSettings() {
   const [s, setS] = useState<Record<string, any>>({});
   useEffect(() => { supabase.from('settings').select('*').then(({ data }) => { const map: any = {}; data?.forEach((r: any) => map[r.key] = r.value); setS(map); }); }, []);
   const save = async (key: string, value: any) => {
-    const { error } = await supabase.from('settings').update({ value }).eq('key', key);
+    setS((p) => ({ ...p, [key]: value }));
+    const { error } = await supabase.from('settings').upsert({ key, value }, { onConflict: 'key' });
     if (error) return toast.error(error.message);
     toast.success('Saved');
   };
@@ -112,6 +113,30 @@ export function AdminSettings() {
           <input type="checkbox" defaultChecked={!!s.announcement?.active} onChange={(e) => save('announcement', { ...s.announcement, active: e.target.checked })} /> Active
         </label>
       </div>
+      </div>
+
+      <div className="border border-border p-5 mt-8 max-w-xl">
+        <div className="eyebrow mb-4">Home — New Arrivals section</div>
+        {[
+          { k: 'eyebrow', l: 'Eyebrow tag', t: 'text' },
+          { k: 'title', l: 'Title', t: 'text' },
+          { k: 'subtitle', l: 'Subtitle', t: 'text' },
+          { k: 'cta_label', l: 'CTA label', t: 'text' },
+          { k: 'cta_href', l: 'CTA link', t: 'text' },
+        ].map(({ k, l, t }) => (
+          <div key={k} className="mb-4">
+            <label className="text-xs uppercase tracking-widest text-muted-foreground">{l}</label>
+            <input type={t} defaultValue={s.home_new_arrivals?.[k] ?? ''}
+              onBlur={(e) => save('home_new_arrivals', { ...(s.home_new_arrivals || {}), [k]: e.target.value })}
+              className="mt-1.5 w-full border border-border bg-transparent px-3 py-2 text-sm" />
+          </div>
+        ))}
+        <label className="text-xs inline-flex items-center gap-2">
+          <input type="checkbox" defaultChecked={s.home_new_arrivals?.enabled !== false}
+            onChange={(e) => save('home_new_arrivals', { ...(s.home_new_arrivals || {}), enabled: e.target.checked })} />
+          Section enabled on home page
+        </label>
+        <p className="text-[11px] text-muted-foreground mt-3">Products shown are <strong>featured</strong> products. Toggle "Featured" on any product in the Products section to include it.</p>
       </div>
     </div>
   );
