@@ -219,6 +219,9 @@ export default function Home() {
       {/* Editorial Bento Grid */}
       <BentoGrid />
 
+      {/* New Arrivals (admin-editable, dark cinematic) */}
+      <NewArrivals />
+
       {/* Category Section */}
       <section className="bg-white">
         <div className="grid grid-cols-1 md:grid-cols-3">
