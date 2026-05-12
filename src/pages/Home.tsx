@@ -6,6 +6,7 @@ import { useSEO } from '@/lib/useSEO';
 import BentoGrid from '@/components/home/BentoGrid';
 import Testimonials from '@/components/home/Testimonials';
 import EditorialMarquee from '@/components/home/EditorialMarquee';
+import NewArrivals from '@/components/home/NewArrivals';
 
 export default function Home() {
   useSEO({
