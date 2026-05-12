@@ -251,7 +251,7 @@ export default function Home() {
                   <h3 className="text-black text-4xl md:text-5xl lg:text-6xl tracking-tight mb-4 font-elegant font-light">
                     Menswear
                   </h3>
-                  <span className="text-black/60 text-xs tracking-[0.4em] uppercase font-light translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 font-ui inline-flex items-center gap-2">
+                  <span className="text-black/60 text-xs tracking-[0.4em] uppercase font-light opacity-70 group-hover:opacity-100 group-hover:text-accent transition-all duration-500 font-ui inline-flex items-center gap-2">
                     Shop Collection <ArrowRight className="h-3 w-3" />
                   </span>
                 </div>
@@ -284,7 +284,7 @@ export default function Home() {
                   <h3 className="text-black text-4xl md:text-5xl lg:text-6xl tracking-tight mb-4 font-elegant font-light">
                     Womenswear
                   </h3>
-                  <span className="text-black/60 text-xs tracking-[0.4em] uppercase font-light translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 font-ui inline-flex items-center gap-2">
+                  <span className="text-black/60 text-xs tracking-[0.4em] uppercase font-light opacity-70 group-hover:opacity-100 group-hover:text-accent transition-all duration-500 font-ui inline-flex items-center gap-2">
                     Shop Collection <ArrowRight className="h-3 w-3" />
                   </span>
                 </div>
@@ -318,7 +318,7 @@ export default function Home() {
                   <h3 className="text-black text-4xl md:text-5xl lg:text-6xl tracking-tight mb-4 font-elegant font-light">
                     Accessories
                   </h3>
-                  <span className="text-black/60 text-xs tracking-[0.4em] uppercase font-light translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 font-ui inline-flex items-center gap-2">
+                  <span className="text-black/60 text-xs tracking-[0.4em] uppercase font-light opacity-70 group-hover:opacity-100 group-hover:text-accent transition-all duration-500 font-ui inline-flex items-center gap-2">
                     Shop Collection <ArrowRight className="h-3 w-3" />
                   </span>
                 </div>
