@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { ChevronRight, ArrowLeft, ShieldCheck, Truck, CreditCard } from 'lucide-react';
+import { triggerOrderNotification } from '@/lib/whatsapp';
 
 const addressSchema = z.object({
   full_name: z.string().trim().min(2).max(80),
@@ -153,6 +154,9 @@ export default function Checkout() {
         await payWithRazorpay(order, codAdvance);
       }
 
+      if (addr.phone) {
+        triggerOrderNotification('order_placed', order, addr.phone).catch(() => {});
+      }
       toast.success('Order secured in the archive');
       clear();
       navigate(`/order-success/${order.id}`);

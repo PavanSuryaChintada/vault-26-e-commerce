@@ -24,6 +24,7 @@ import AdminProducts from "@/pages/admin/AdminProducts";
 import { AdminCoupons, AdminCustomers, AdminSettings } from "@/pages/admin/AdminMisc";
 import AdminInvoiceTemplate from "@/pages/admin/AdminInvoiceTemplate";
 import AdminCatalog from "@/pages/admin/AdminCatalog";
+import AdminWhatsApp from "@/pages/admin/AdminWhatsApp";
 import Invoice from "@/pages/Invoice";
 import NotFound from "@/pages/NotFound";
 
@@ -69,6 +70,7 @@ const App = () => {
             <Route path="customers" element={<AdminCustomers />} />
             <Route path="invoice-template" element={<AdminInvoiceTemplate />} />
             <Route path="settings" element={<AdminSettings />} />
+            <Route path="whatsapp" element={<AdminWhatsApp />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
