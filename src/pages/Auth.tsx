@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { lovable } from '@/integrations/lovable';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { Mail, Lock, User as UserIcon, Phone, Eye, EyeOff } from 'lucide-react';
@@ -12,10 +11,11 @@ function GoogleButton({ label = 'Continue with Google' }: { label?: string }) {
   const [busy, setBusy] = useState(false);
   const onClick = async () => {
     setBusy(true);
-    const result = await lovable.auth.signInWithOAuth('google', { redirect_uri: window.location.origin + '/account' });
-    if (result.error) { toast.error((result.error as any).message || 'Google sign-in failed'); setBusy(false); return; }
-    if (result.redirected) return;
-    window.location.href = '/account';
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin + '/account' },
+    });
+    if (error) { toast.error(error.message || 'Google sign-in failed'); setBusy(false); }
   };
   return (
     <button type="button" onClick={onClick} disabled={busy} className="w-full flex items-center justify-center gap-3 border border-black/15 py-4 text-[11px] tracking-[0.25em] uppercase font-ui font-bold hover:bg-black hover:text-white transition-colors disabled:opacity-40">
