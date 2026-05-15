@@ -3,6 +3,7 @@ import Footer from '@/components/layout/Footer';
 import BottomNav from '@/components/layout/BottomNav';
 import WhatsAppButton from '@/components/shared/WhatsAppButton';
 import CartDrawer from '@/components/cart/CartDrawer';
+import AnnouncementBar from '@/components/cms/AnnouncementBar';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
@@ -12,6 +13,7 @@ export default function StoreLayout() {
   useEffect(() => { window.scrollTo(0, 0); }, [loc.pathname]);
   return (
     <div className="min-h-screen flex flex-col">
+      <AnnouncementBar />
       <Navbar />
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.main

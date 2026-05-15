@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '@/lib/useAuth';
-import { LayoutDashboard, ShoppingBag, Package, Tag, Users, Settings as SettingsIcon, Ticket, FileText, Menu, X, RotateCcw, Layers, ExternalLink, ArrowLeft, MessageCircle } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, Package, Tag, Users, Settings as SettingsIcon, Ticket, FileText, Menu, X, RotateCcw, Layers, ExternalLink, ArrowLeft, MessageCircle, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -18,6 +18,7 @@ const NAV = [
   { to: '/admin/invoice-template', icon: FileText, label: 'Invoice' },
   { to: '/admin/settings', icon: SettingsIcon, label: 'Settings' },
   { to: '/admin/whatsapp', icon: MessageCircle, label: 'WhatsApp' },
+  { to: '/admin/cms', icon: Globe, label: 'CMS' },
 ];
 
 const LOGO_URL = "https://res.cloudinary.com/dsqeawg67/image/upload/v1776861404/WhatsApp_Image_2026-04-21_at_23.40.39-removebg-preview_1_ztvyke.png";

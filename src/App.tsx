@@ -53,6 +53,7 @@ const AdminInvoiceTemplate = lazy(
   () => import("@/pages/admin/AdminInvoiceTemplate")
 );
 const AdminWhatsApp = lazy(() => import("@/pages/admin/AdminWhatsApp"));
+const AdminCMS = lazy(() => import("@/pages/admin/AdminCMS"));
 
 // ─── Query client with sensible cache defaults ───────────────────────────────
 const queryClient = new QueryClient({
@@ -126,6 +127,7 @@ const App = () => {
                 />
                 <Route path="settings" element={<AdminSettings />} />
                 <Route path="whatsapp" element={<AdminWhatsApp />} />
+                <Route path="cms" element={<AdminCMS />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
