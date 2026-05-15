@@ -25,6 +25,26 @@ function GoogleButton({ label = 'Continue with Google' }: { label?: string }) {
   );
 }
 
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_MS = 15 * 60 * 1000;
+
+function getAttempts(email: string) {
+  try { return JSON.parse(localStorage.getItem(`_la_${email}`) || '{"n":0,"t":0}'); } catch { return { n: 0, t: 0 }; }
+}
+function recordFailure(email: string) {
+  const a = getAttempts(email);
+  localStorage.setItem(`_la_${email}`, JSON.stringify({ n: a.n + 1, t: Date.now() }));
+}
+function clearAttempts(email: string) { localStorage.removeItem(`_la_${email}`); }
+function isLockedOut(email: string) {
+  const a = getAttempts(email);
+  return a.n >= MAX_ATTEMPTS && Date.now() - a.t < LOCKOUT_MS;
+}
+function minutesLeft(email: string) {
+  const a = getAttempts(email);
+  return Math.ceil((LOCKOUT_MS - (Date.now() - a.t)) / 60000);
+}
+
 export function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -34,10 +54,20 @@ export function Login() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmed = email.trim().toLowerCase();
+    if (isLockedOut(trimmed)) {
+      return toast.error(`Too many attempts. Try again in ${minutesLeft(trimmed)} min.`);
+    }
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    const { error } = await supabase.auth.signInWithPassword({ email: trimmed, password });
     setLoading(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      recordFailure(trimmed);
+      const a = getAttempts(trimmed);
+      const left = MAX_ATTEMPTS - a.n;
+      return toast.error(left > 0 ? `${error.message} (${left} attempt${left !== 1 ? 's' : ''} left)` : `Account locked for ${minutesLeft(trimmed)} min.`);
+    }
+    clearAttempts(trimmed);
     toast.success('Access Granted // Welcome Back');
     navigate('/account');
   };

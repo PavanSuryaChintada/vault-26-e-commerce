@@ -14,7 +14,8 @@ export default function AdminOrders() {
   const load = () => supabase.from('orders').select('*').order('created_at', { ascending: false }).then(({ data }) => setOrders(data || []));
   useEffect(() => { load(); }, []);
   const update = async (id: string, status: string) => {
-    const { error } = await supabase.from('orders').update({ status: status as any }).eq('id', id);
+    if (!STATUSES.includes(status as any)) return toast.error('Invalid status');
+    const { error } = await supabase.from('orders').update({ status: status as typeof STATUSES[number] }).eq('id', id);
     if (error) return toast.error(error.message);
     toast.success('Status updated'); load();
   };
